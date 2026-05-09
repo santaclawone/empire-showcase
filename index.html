@@ -7,64 +7,106 @@
   <meta name="description" content="Data studio. Research, build, ship.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Crimson+Text:ital@0;1&family=Space+Grotesk:wght@400;700&family=Space+Mono:regular&family=Fraunces:opsz,wght@9..144,400..900&family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Crimson+Text:ital@0;1&family=Space+Grotesk:wght@400;700&family=Fraunces:opsz,wght@9..144,400..900&family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="theme-minimalist">
+<body class="design-asymmetric theme-minimalist">
 
-  <!-- Theme selector -->
-  <div class="switcher" role="toolbar" aria-label="Theme selector">
-    <div class="switcher-track" role="tablist">
-      <button class="switcher-btn" data-theme="minimalist" role="tab" aria-selected="true">
+  <!-- Cursor follower -->
+  <div class="cursor" aria-hidden="true"></div>
+
+  <!-- Switcher bar (design row + theme row) -->
+  <div class="switcher" role="toolbar" aria-label="Design and theme selector">
+    <div class="switcher-row switcher-row--design" role="tablist" aria-label="Design layouts">
+      <button class="switcher-btn" data-type="design" data-value="asymmetric" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--asymmetric"></span></span>
+        <span class="switcher-label">Asymmetric</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="centered" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--centered"></span></span>
+        <span class="switcher-label">Centered</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="sidebar" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--sidebar"></span></span>
+        <span class="switcher-label">Sidebar</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="fullbleed" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--fullbleed"></span></span>
+        <span class="switcher-label">Full-bleed</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="grid" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--grid"></span></span>
+        <span class="switcher-label">Grid</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="magazine" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--magazine"></span></span>
+        <span class="switcher-label">Magazine</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="dashboard" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--dashboard"></span></span>
+        <span class="switcher-label">Dashboard</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="bento" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--bento"></span></span>
+        <span class="switcher-label">Bento</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="minimal" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--minimal"></span></span>
+        <span class="switcher-label">Minimal</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="canvas" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview sw-preview--canvas"></span></span>
+        <span class="switcher-label">Canvas</span>
+      </button>
+    </div>
+    <div class="switcher-row switcher-row--theme" role="tablist" aria-label="Color themes">
+      <button class="switcher-btn" data-type="theme" data-value="minimalist" role="tab" aria-selected="true">
         <span class="switcher-swatch" style="--sw: #a78bfa"></span>
         <span class="switcher-label">Minimal</span>
       </button>
-      <button class="switcher-btn" data-theme="brutalist" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="brutalist" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #e8bf00; --sw-bg: #2a2a1a"></span>
         <span class="switcher-label">Brutal</span>
       </button>
-      <button class="switcher-btn" data-theme="glass" role="tab" aria-selected="false">
-        <span class="switcher-swatch" style="--sw: #ffffff; --sw-bg: rgba(255,255,255,0.1)"></span>
+      <button class="switcher-btn" data-type="theme" data-value="glass" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: rgba(255,255,255,0.6); --sw-bg: rgba(255,255,255,0.08)"></span>
         <span class="switcher-label">Glass</span>
       </button>
-      <button class="switcher-btn" data-theme="terminal" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="terminal" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #00FF41; --sw-bg: #0a0a0a"></span>
         <span class="switcher-label">Terminal</span>
       </button>
-      <button class="switcher-btn" data-theme="swiss" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="swiss" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #FF0000; --sw-bg: #ffffff"></span>
         <span class="switcher-label">Swiss</span>
       </button>
-      <button class="switcher-btn" data-theme="cyberpunk" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="cyberpunk" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #00FFFF; --sw-bg: #0a0a2a"></span>
         <span class="switcher-label">Cyber</span>
       </button>
-      <button class="switcher-btn" data-theme="editorial" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="editorial" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #C0392B; --sw-bg: #F5F0E8"></span>
         <span class="switcher-label">Editorial</span>
       </button>
-      <button class="switcher-btn" data-theme="mono" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="mono" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #000000; --sw-bg: #f5f5f5"></span>
         <span class="switcher-label">Mono</span>
       </button>
-      <button class="switcher-btn" data-theme="nature" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="nature" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #7EC850; --sw-bg: #0D1F12"></span>
         <span class="switcher-label">Nature</span>
       </button>
-      <button class="switcher-btn" data-theme="bauhaus" role="tab" aria-selected="false">
+      <button class="switcher-btn" data-type="theme" data-value="bauhaus" role="tab" aria-selected="false">
         <span class="switcher-swatch" style="--sw: #E53935; --sw-bg: #FAFAFA"></span>
         <span class="switcher-label">Bauhaus</span>
       </button>
     </div>
-    <div class="switcher-arrows">
-      <button class="switcher-arrow switcher-arrow--prev" aria-label="Previous theme">&#8592;</button>
-      <span class="switcher-name">Minimal</span>
-      <button class="switcher-arrow switcher-arrow--next" aria-label="Next theme">&#8594;</button>
+    <div class="switcher-current">
+      <span class="switcher-current-design">Asymmetric</span>
+      <span class="switcher-current-sep">/</span>
+      <span class="switcher-current-theme">Minimal</span>
     </div>
   </div>
-
-  <!-- Cursor follower -->
-  <div class="cursor" aria-hidden="true"></div>
 
   <!-- Nav -->
   <nav class="nav">
@@ -77,254 +119,203 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero" id="studio">
-    <div class="hero-label">
-      <span class="hero-label-dot"></span>
-      <span>Live from Dublin</span>
-    </div>
-    <h1 class="hero-title" data-text="Data studio.">Data studio.</h1>
-    <div class="hero-grid">
-      <div class="hero-stat">
-        <span class="hero-stat-value" id="stat-projects">0</span>
-        <span class="hero-stat-label">Projects shipped</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value" id="stat-nations">0</span>
-        <span class="hero-stat-label">Nations tracked</span>
-      </div>
-      <div class="hero-stat">
-        <span class="hero-stat-value" id="stat-tournaments">0</span>
-        <span class="hero-stat-label">Tournaments analysed</span>
-      </div>
-    </div>
-    <div class="hero-scroll" aria-hidden="true">
-      <span class="hero-scroll-line"></span>
-      <span class="hero-scroll-label">Scroll</span>
-    </div>
-  </header>
+  <!-- Main content -->
+  <main class="main">
 
-  <!-- Work Map -->
-  <section class="map" id="work">
-    <div class="map-header">
-      <h2 class="section-title map-title">
-        <span class="section-title-num">01</span>
-        Current work
-      </h2>
-      <p class="map-desc">48 teams | 1 tournament | 0 assumptions</p>
-    </div>
-    <div class="map-grid">
-      <div class="map-card map-card--large">
-        <div class="map-card-icon map-card-icon--pulse">&#9673;</div>
-        <div class="map-card-content">
-          <h3>World Cup Air Miles Index</h3>
-          <p>Flight distance dataset for every nation across all 23 tournaments. Capital depature, internal travel, total air miles. 1930 to 2026.</p>
-          <div class="map-card-meta">
-            <span class="map-card-tag">Research</span>
-            <span class="map-card-tag">Dataset</span>
-          </div>
+    <!-- Hero -->
+    <header class="hero" id="studio">
+      <div class="hero-label">
+        <span class="hero-label-dot"></span>
+        <span>Live from Dublin</span>
+      </div>
+      <h1 class="hero-title" data-text="Data studio.">Data studio.</h1>
+      <div class="hero-grid">
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="stat-projects">0</span>
+          <span class="hero-stat-label">Projects shipped</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="stat-nations">0</span>
+          <span class="hero-stat-label">Nations tracked</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-value" id="stat-tournaments">0</span>
+          <span class="hero-stat-label">Tournaments analysed</span>
         </div>
       </div>
-      <div class="map-card">
-        <div class="map-card-icon">&#9673;</div>
-        <div class="map-card-content">
-          <h3>Funky Stats Engine</h3>
-          <p>One signature stat per qualified nation. 48 teams, 48 stories. No filler.</p>
-          <div class="map-card-meta">
-            <span class="map-card-tag">Social</span>
-          </div>
-        </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span class="hero-scroll-line"></span>
+        <span class="hero-scroll-label">Scroll</span>
       </div>
-      <div class="map-card">
-        <div class="map-card-icon">&#9673;</div>
-        <div class="map-card-content">
-          <h3>PL x WC2026 Matrix</h3>
-          <p>Nationality breakdown across 20 Premier League clubs. All-time player origins mapped to World Cup squads.</p>
-          <div class="map-card-meta">
-            <span class="map-card-tag">Data</span>
-          </div>
-        </div>
-      </div>
-      <div class="map-card">
-        <div class="map-card-icon">&#9673;</div>
-        <div class="map-card-content">
-          <h3>Goals-per-Game Era Map</h3>
-          <p>Goal density across 90 years of World Cup football. From Hungary 1954 to the defensive shifts of the 1990s.</p>
-          <div class="map-card-meta">
-            <span class="map-card-tag">Visualisation</span>
-          </div>
-        </div>
-      </div>
-      <div class="map-card">
-        <div class="map-card-icon">&#9673;</div>
-        <div class="map-card-content">
-          <h3>Host Advantage Score</h3>
-          <p>Host nation performance versus pre-tournament ranking. 22 tournaments of home-ground effect data.</p>
-          <div class="map-card-meta">
-            <span class="map-card-tag">Analysis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- Agents -->
-  <section class="agents" id="agents">
-    <div class="agents-header">
-      <h2 class="section-title">
-        <span class="section-title-num">02</span>
-        The unit
-      </h2>
-      <p class="agents-desc">Six functions. One output.</p>
-    </div>
-    <div class="agents-grid">
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F4BB;</div>
+    <!-- Work Map -->
+    <section class="map" id="work">
+      <div class="map-header">
+        <h2 class="section-title">
+          <span class="section-title-num">01</span>
+          Current work
+        </h2>
+        <p class="map-desc">48 teams | 1 tournament | 0 assumptions</p>
+      </div>
+      <div class="map-grid">
+        <div class="map-card map-card--large">
+          <div class="map-card-icon map-card-icon--pulse">&#9673;</div>
+          <div class="map-card-content">
+            <h3>World Cup Air Miles Index</h3>
+            <p>Flight distance dataset for every nation across all 23 tournaments. Capital depature, internal travel, total air miles. 1930 to 2026.</p>
+            <div class="map-card-meta">
+              <span class="map-card-tag">Research</span>
+              <span class="map-card-tag">Dataset</span>
+            </div>
+          </div>
         </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">The Developer</h3>
-          <p class="agent-card-role">Engineering lead</p>
-          <p class="agent-card-desc">Architecture, implementation, production systems. Ships what the designer specs, at speed.</p>
+        <div class="map-card">
+          <div class="map-card-icon">&#9673;</div>
+          <div class="map-card-content"><h3>Funky Stats Engine</h3><p>One signature stat per nation. 48 teams. No filler.</p><div class="map-card-meta"><span class="map-card-tag">Social</span></div></div>
         </div>
-      </article>
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F3A8;</div>
+        <div class="map-card">
+          <div class="map-card-icon">&#9673;</div>
+          <div class="map-card-content"><h3>PL x WC2026 Matrix</h3><p>Nationality breakdown across 20 Premier League clubs mapped to WC squads.</p><div class="map-card-meta"><span class="map-card-tag">Data</span></div></div>
         </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">The Designer</h3>
-          <p class="agent-card-role">Visual lead</p>
-          <p class="agent-card-desc">Layout, typography, motion. Every pixel has intent. Every interaction has purpose.</p>
+        <div class="map-card">
+          <div class="map-card-icon">&#9673;</div>
+          <div class="map-card-content"><h3>Goals-per-Game Era Map</h3><p>Goal density across 90 years. From Hungary 1954 to modern defense.</p><div class="map-card-meta"><span class="map-card-tag">Visualisation</span></div></div>
         </div>
-      </article>
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F4CA;</div>
+        <div class="map-card">
+          <div class="map-card-icon">&#9673;</div>
+          <div class="map-card-content"><h3>Host Advantage Score</h3><p>Host vs ranking performance across 22 tournaments.</p><div class="map-card-meta"><span class="map-card-tag">Analysis</span></div></div>
         </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">Stat Man</h3>
-          <p class="agent-card-role">Data researcher</p>
-          <p class="agent-card-desc">Raw data, careful analysis, structured findings. Every claim has a source. Every number has context.</p>
-        </div>
-      </article>
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F4E2;</div>
-        </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">Hype Man</h3>
-          <p class="agent-card-role">Distribution</p>
-          <p class="agent-card-desc">Research becomes content. Content reaches audience. No marketing copy. No fluff. Just signal.</p>
-        </div>
-      </article>
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F454;</div>
-        </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">Product</h3>
-          <p class="agent-card-role">Strategy</p>
-          <p class="agent-card-desc">Direction, priorities, market fit. Defines what gets built and why. Holds the line on scope.</p>
-        </div>
-      </article>
-      <article class="agent-card">
-        <div class="agent-card-visual">
-          <div class="agent-card-emoji">&#x1F385;</div>
-        </div>
-        <div class="agent-card-body">
-          <h3 class="agent-card-name">Santa1</h3>
-          <p class="agent-card-role">Orchestrator</p>
-          <p class="agent-card-desc">Connects the unit. Makes the call on trade-offs. Takes work live. Keeps everyone aimed at the same target.</p>
-        </div>
-      </article>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <!-- Pipeline -->
-  <section class="pipeline">
-    <div class="pipeline-header">
-      <h2 class="section-title">
-        <span class="section-title-num">03</span>
-        Pipeline
-      </h2>
-      <p class="pipeline-desc">Raw research to published output. No bloat.</p>
-    </div>
-    <div class="pipeline-steps">
-      <div class="pipeline-step" style="--step-index: 0">
-        <div class="pipeline-step-visual">
-          <span class="pipeline-step-num">S1</span>
-        </div>
-        <div class="pipeline-step-content">
-          <h3>Raw query</h3>
-          <p>A question, a dataset, a hunch. Comes from anywhere.</p>
-        </div>
+    <!-- Agents -->
+    <section class="agents" id="agents">
+      <div class="agents-header">
+        <h2 class="section-title">
+          <span class="section-title-num">02</span>
+          The unit
+        </h2>
+        <p class="agents-desc">Six functions. One output.</p>
       </div>
-      <div class="pipeline-step" style="--step-index: 1">
-        <div class="pipeline-step-visual">
-          <span class="pipeline-step-num">S2</span>
-        </div>
-        <div class="pipeline-step-content">
-          <h3>Research & verify</h3>
-          <p>Stat Man digs. Sources cross-checked. Numbers validated.</p>
-        </div>
+      <div class="agents-grid">
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F4BB;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">The Developer</h3>
+            <span class="agent-card-role">Engineering lead</span>
+            <p class="agent-card-desc">Architecture, implementation, production systems. Ships what the designer specs, at speed.</p>
+          </div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F3A8;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">The Designer</h3>
+            <span class="agent-card-role">Visual lead</span>
+            <p class="agent-card-desc">Layout, typography, motion. Every pixel has intent.</p>
+          </div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F4CA;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">Stat Man</h3>
+            <span class="agent-card-role">Data researcher</span>
+            <p class="agent-card-desc">Data, analysis, findings. Every claim has a source.</p>
+          </div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F4E2;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">Hype Man</h3>
+            <span class="agent-card-role">Distribution</span>
+            <p class="agent-card-desc">Research to content. Content to audience. Signal only.</p>
+          </div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F454;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">Product</h3>
+            <span class="agent-card-role">Strategy</span>
+            <p class="agent-card-desc">Direction, priorities, market fit. Defines what gets built.</p>
+          </div>
+        </article>
+        <article class="agent-card">
+          <div class="agent-card-visual"><span class="agent-card-emoji">&#x1F385;</span></div>
+          <div class="agent-card-body">
+            <h3 class="agent-card-name">Santa1</h3>
+            <span class="agent-card-role">Orchestrator</span>
+            <p class="agent-card-desc">Connects the unit. Makes the call. Takes work live.</p>
+          </div>
+        </article>
       </div>
-      <div class="pipeline-step" style="--step-index: 2">
-        <div class="pipeline-step-visual">
-          <span class="pipeline-step-num">S3</span>
-        </div>
-        <div class="pipeline-step-content">
-          <h3>Design & build</h3>
-          <p>Designer specs. Developer builds. Review gates every state.</p>
-        </div>
-      </div>
-      <div class="pipeline-step" style="--step-index: 3">
-        <div class="pipeline-step-visual">
-          <span class="pipeline-step-num">S4</span>
-        </div>
-        <div class="pipeline-step-content">
-          <h3>Ship</h3>
-          <p>Hype Man distributes. Santa1 deploys. Work reaches audience.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact -->
-  <section class="contact" id="contact">
-    <div class="contact-inner">
-      <h2 class="section-title">
-        <span class="section-title-num">04</span>
-        Contact
-      </h2>
-      <div class="contact-block">
-        <div class="contact-line">
-          <span class="contact-label">Email</span>
-          <a href="mailto:studio@empire.work" class="contact-value">studio@empire.work</a>
+    <!-- Pipeline -->
+    <section class="pipeline">
+      <div class="pipeline-header">
+        <h2 class="section-title">
+          <span class="section-title-num">03</span>
+          Pipeline
+        </h2>
+        <p class="pipeline-desc">Raw research to published output. No bloat.</p>
+      </div>
+      <div class="pipeline-steps">
+        <div class="pipeline-step" style="--step-index: 0">
+          <div class="pipeline-step-visual"><span class="pipeline-step-num">S1</span></div>
+          <div class="pipeline-step-content"><h3>Raw query</h3><p>A question, a dataset, a hunch.</p></div>
         </div>
-        <div class="contact-line">
-          <span class="contact-label">Hub</span>
-          <span class="contact-value">127.0.0.1:5050</span>
+        <div class="pipeline-step" style="--step-index: 1">
+          <div class="pipeline-step-visual"><span class="pipeline-step-num">S2</span></div>
+          <div class="pipeline-step-content"><h3>Research & verify</h3><p>Stat Man digs. Numbers validated.</p></div>
         </div>
-        <div class="contact-line">
-          <span class="contact-label">Status</span>
-          <span class="contact-value contact-status">
-            <span class="contact-status-dot"></span>
-            Live
-          </span>
+        <div class="pipeline-step" style="--step-index: 2">
+          <div class="pipeline-step-visual"><span class="pipeline-step-num">S3</span></div>
+          <div class="pipeline-step-content"><h3>Design & build</h3><p>Designer specs. Developer builds.</p></div>
+        </div>
+        <div class="pipeline-step" style="--step-index: 3">
+          <div class="pipeline-step-visual"><span class="pipeline-step-num">S4</span></div>
+          <div class="pipeline-step-content"><h3>Ship</h3><p>Hype Man distributes. Santa1 deploys.</p></div>
         </div>
       </div>
-      <div class="contact-counter">
-        <span class="contact-counter-num" id="counter">000</span>
-        <span class="contact-counter-label">Projects shipped this session</span>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact" id="contact">
+      <div class="contact-inner">
+        <h2 class="section-title">
+          <span class="section-title-num">04</span>
+          Contact
+        </h2>
+        <div class="contact-block">
+          <div class="contact-line">
+            <span class="contact-label">Email</span>
+            <a href="mailto:studio@empire.work" class="contact-value">studio@empire.work</a>
+          </div>
+          <div class="contact-line">
+            <span class="contact-label">Hub</span>
+            <span class="contact-value">127.0.0.1:5050</span>
+          </div>
+          <div class="contact-line">
+            <span class="contact-label">Status</span>
+            <span class="contact-value contact-status">
+              <span class="contact-status-dot"></span>
+              Live
+            </span>
+          </div>
+        </div>
+        <div class="contact-counter">
+          <span class="contact-counter-num" id="counter">000</span>
+          <span class="contact-counter-label">Projects shipped this session</span>
+        </div>
       </div>
-    </div>
-    <footer class="footer">
-      <span>Empire | Dublin</span>
-      <span class="footer-sep">|</span>
-      <span>Est. 2026</span>
-    </footer>
-  </section>
+      <footer class="footer">
+        <span>Empire | Dublin</span>
+        <span class="footer-sep">|</span>
+        <span>Est. 2026</span>
+      </footer>
+    </section>
+
+  </main>
 
   <script src="main.js"></script>
 </body>
