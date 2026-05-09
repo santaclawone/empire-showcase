@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',()=>{
 'use strict';
 
-const DESIGNS=['glassmorphism','bento','kinetic','mesh','scrollytelling','neobrutal','spatial','skeletal'];
+const DESIGNS=['glassmorphism','bento','kinetic','mesh','scrollytelling','neobrutal','spatial','skeletal','organic','holographic'];
 const THEMES=['minimalist','brutalist','glass','terminal','swiss','cyberpunk','editorial','mono','nature','bauhaus'];
 const KEY_DESIGN='empire-design',KEY_THEME='empire-theme';
 const body=document.body;
@@ -9,7 +9,7 @@ const designBtns=document.querySelectorAll('[data-type="design"]');
 const themeBtns=document.querySelectorAll('[data-type="theme"]');
 const currentDesignEl=document.querySelector('.switcher-current-design');
 const currentThemeEl=document.querySelector('.switcher-current-theme');
-const names={designs:{glassmorphism:'Glass 2.0',bento:'Bento',kinetic:'Kinetic',mesh:'Mesh',scrollytelling:'Scrolly',neobrutal:'Neo-Brutal',spatial:'Spatial',skeletal:'Skeletal'},themes:{minimalist:'Minimal',brutalist:'Brutal',glass:'Glass',terminal:'Terminal',swiss:'Swiss',cyberpunk:'Cyber',editorial:'Editorial',mono:'Mono',nature:'Nature',bauhaus:'Bauhaus'}};
+const names={designs:{glassmorphism:'Glass 2.0',bento:'Bento',kinetic:'Kinetic',mesh:'Mesh',scrollytelling:'Scrolly',neobrutal:'Neo-Brutal',spatial:'Spatial',skeletal:'Skeletal',organic:'Organic',holographic:'Holographic'},themes:{minimalist:'Minimal',brutalist:'Brutal',glass:'Glass',terminal:'Terminal',swiss:'Swiss',cyberpunk:'Cyber',editorial:'Editorial',mono:'Mono',nature:'Nature',bauhaus:'Bauhaus'}};
 let currentDesign=localStorage.getItem(KEY_DESIGN)||'glassmorphism';
 let currentTheme=localStorage.getItem(KEY_THEME)||'minimalist';
 
@@ -78,10 +78,8 @@ if(window.DeviceOrientationEvent){
   window.addEventListener('deviceorientation',e=>{
     if(!body.classList.contains('design-glassmorphism'))return;
     const beta=e.beta||0,gamma=e.gamma||0;
-    const cards=document.querySelectorAll('.map-card,.agent-card,.pipeline-step');
-    cards.forEach((c,i)=>{
-      const x=gamma*.02*(i%5+1),y=beta*.015*(i%3+1);
-      c.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg)`;
+    document.querySelectorAll('.map-card,.agent-card,.pipeline-step').forEach((c,i)=>{
+      c.style.transform=`perspective(800px) rotateX(${beta*.015*(i%3+1)}deg) rotateY(${gamma*.02*(i%5+1)}deg)`;
     });
   },{passive:true});
 }
@@ -90,8 +88,7 @@ if(window.DeviceOrientationEvent){
 const springObserver=new IntersectionObserver(e=>{e.forEach(e=>{
   if(e.isIntersecting&&body.classList.contains('design-glassmorphism')){
     e.target.style.transition='transform .6s cubic-bezier(.34,1.56,.64,1),opacity .5s';
-    e.target.style.transform='translateY(0)';
-    e.target.style.opacity='1';
+    e.target.style.transform='translateY(0)';e.target.style.opacity='1';
     springObserver.unobserve(e.target);
   }
 })},{threshold:.05});
@@ -100,14 +97,13 @@ document.querySelectorAll('.design-glassmorphism .map-card,.design-glassmorphism
   springObserver.observe(c);
 });
 
-// ---- KINETIC SCROLL-TIMELINE (text weight+rotation) ----
+// ---- KINETIC SCROLL-TIMELINE ----
 let lastScrollY=0,scrollVelocity=0;
 window.addEventListener('scroll',()=>{
   if(!body.classList.contains('design-kinetic'))return;
-  const now=window.scrollY;
-  scrollVelocity=Math.abs(now-lastScrollY);
-  lastScrollY=now;
-  const rot=Math.min(now*.02,12);
+  scrollVelocity=Math.abs(window.scrollY-lastScrollY);
+  lastScrollY=window.scrollY;
+  const rot=Math.min(window.scrollY*.02,12);
   const weight=500+Math.min(scrollVelocity*2,400);
   document.querySelectorAll('.hero-title,.section-title').forEach(el=>{
     el.style.transform=`rotate(${rot}deg)`;
@@ -122,17 +118,14 @@ window.addEventListener('scroll',()=>{
 document.addEventListener('designchange',()=>{
   if(body.classList.contains('design-scrollytelling')){
     const sections=[...document.querySelectorAll('.hero,.map,.agents,.pipeline,.contact')];
-    const total=sections.length;
     sections.forEach((s,i)=>{
-      const top=(i/total)*100;
-      const bottom=((i+1)/total)*100;
-      s.style.setProperty('--stage-top',top+'%');
-      s.style.setProperty('--stage-bottom',bottom+'%');
+      s.style.setProperty('--stage-top',(i/sections.length*100)+'%');
+      s.style.setProperty('--stage-bottom',((i+1)/sections.length*100)+'%');
     });
   }
 });
 
-// ---- NEO-BRUTAL HARD SHADOW ON CLICK ----
+// ---- NEO-BRUTAL HARD SHADOW ----
 document.addEventListener('mousedown',e=>{
   const card=e.target.closest('.map-card,.agent-card,.pipeline-step');
   if(card&&body.classList.contains('design-neobrutal')){
@@ -146,6 +139,30 @@ document.addEventListener('mousedown',e=>{
     };
     document.addEventListener('mouseup',up);
   }
+});
+
+// ---- ORGANIC LAZY-PARALLAX ----
+let organicRAF=null;
+window.addEventListener('scroll',()=>{
+  if(!body.classList.contains('design-organic'))return;
+  if(organicRAF)cancelAnimationFrame(organicRAF);
+  organicRAF=requestAnimationFrame(()=>{
+    const scrollY=window.scrollY*.15;
+    document.querySelectorAll('.design-organic .map-card').forEach((c,i)=>{
+      const lag=i*8;
+      c.style.transform=`translateY(${scrollY+lag}px)`;
+    });
+  });
+},{passive:true});
+
+// ---- HOLOGRAPHIC MOUSE SHIMMER ----
+document.addEventListener('mousemove',e=>{
+  if(!body.classList.contains('design-holographic'))return;
+  const x=e.clientX/window.innerWidth*100,y=e.clientY/window.innerHeight*100;
+  document.querySelectorAll('.design-holographic .map-card::before,.design-holographic .agent-card::before').forEach(el=>{});
+  document.querySelectorAll('.design-holographic .hero-title').forEach(el=>{
+    el.style.backgroundPosition=`${x}% ${y}%`;
+  });
 });
 
 // ---- HERO DOTS ----
