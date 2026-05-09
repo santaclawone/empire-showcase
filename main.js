@@ -5,7 +5,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
 
-  const DESIGNS = ['asymmetric','centered','sidebar','fullbleed','grid','magazine','dashboard','bento','minimal','canvas'];
+  const DESIGNS = ['spatial','type','slides','terminal','zine','zen','split','os','deutsche','organic'];  // 10 distinct identities
   const THEMES = ['minimalist','brutalist','glass','terminal','swiss','cyberpunk','editorial','mono','nature','bauhaus'];
 
   const KEY_DESIGN = 'empire-design';
@@ -20,9 +20,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const names = {
     designs: {
-      asymmetric: 'Asymmetric', centered: 'Centered', sidebar: 'Sidebar',
-      fullbleed: 'Full-bleed', grid: 'Grid', magazine: 'Magazine',
-      dashboard: 'Dashboard', bento: 'Bento', minimal: 'Minimal', canvas: 'Canvas'
+      spatial: 'Spatial', type: 'Type', slides: 'Slides',
+      terminal: 'Terminal', zine: 'Zine', zen: 'Zen',
+      split: 'Split', os: 'OS', deutsche: 'Deutsche', organic: 'Organic'
     },
     themes: {
       minimalist: 'Minimal', brutalist: 'Brutal', glass: 'Glass',
@@ -31,8 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  let currentDesign = localStorage.getItem(KEY_DESIGN) || 'asymmetric';
-  let currentTheme = localStorage.getItem(KEY_THEME) || 'minimalist';
+  let currentDesign = localStorage.getItem(KEY_DESIGN) || 'spatial';
+  let currentTheme = localStorage.getItem(KEY_THEME) || 'minimalist';  // keep default theme same
 
   const apply = (type, value, animate = true) => {
     if (!animate) body.classList.add('switching');
