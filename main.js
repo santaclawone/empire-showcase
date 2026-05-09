@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const interval = setInterval(() => {
             cur += step;
             if (cur >= 2026) { cur = 2026; clearInterval(interval); }
-            counterEl.textContent = String(cur).padStart(3, '0');
+            counterEl.textContent = String(cur).padStart(4, '0');
           }, 24);
         }
       });
@@ -162,9 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---- STAT COUNTERS ----
   const stats = [
-    { el: document.getElementById('stat-projects'), target: 74 },
-    { el: document.getElementById('stat-nations'), target: 48 },
-    { el: document.getElementById('stat-tournaments'), target: 23 },
+    { el: document.getElementById('stat-origins'), target: 12 },
+    { el: document.getElementById('stat-roasts'), target: 47 },
+    { el: document.getElementById('stat-countries'), target: 3 },
   ].filter(s => s.el);
 
   const statObs = new IntersectionObserver((entries) => {
