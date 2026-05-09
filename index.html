@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empire | Data studio</title>
+  <meta name="description" content="Data studio. Research, build, ship.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Cursor follower -->
+  <div class="cursor" aria-hidden="true"></div>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <a href="#" class="nav-mark">Empire</a>
+    <div class="nav-links">
+      <a href="#studio">Studio</a>
+      <a href="#work">Work</a>
+      <a href="#agents">Agents</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="hero" id="studio">
+    <div class="hero-label">
+      <span class="hero-label-dot"></span>
+      <span>Live from Dublin</span>
+    </div>
+    <h1 class="hero-title" data-text="Data studio.">Data studio.</h1>
+    <div class="hero-grid">
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-projects">0</span>
+        <span class="hero-stat-label">Projects shipped</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-nations">0</span>
+        <span class="hero-stat-label">Nations tracked</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-value" id="stat-tournaments">0</span>
+        <span class="hero-stat-label">Tournaments analysed</span>
+      </div>
+    </div>
+    <div class="hero-scroll" aria-hidden="true">
+      <span class="hero-scroll-line"></span>
+      <span class="hero-scroll-label">Scroll</span>
+    </div>
+  </header>
+
+  <!-- Work Map -->
+  <section class="map" id="work">
+    <div class="map-header">
+      <h2 class="section-title map-title">
+        <span class="section-title-num">01</span>
+        Current work
+      </h2>
+      <p class="map-desc">48 teams | 1 tournament | 0 assumptions</p>
+    </div>
+    <div class="map-grid">
+      <div class="map-card map-card--large">
+        <div class="map-card-icon map-card-icon--pulse">&#9673;</div>
+        <div class="map-card-content">
+          <h3>World Cup Air Miles Index</h3>
+          <p>Flight distance dataset for every nation across all 23 tournaments. Capital depature, internal travel, total air miles. 1930 to 2026.</p>
+          <div class="map-card-meta">
+            <span class="map-card-tag">Research</span>
+            <span class="map-card-tag">Dataset</span>
+          </div>
+        </div>
+      </div>
+      <div class="map-card">
+        <div class="map-card-icon">&#9673;</div>
+        <div class="map-card-content">
+          <h3>Funky Stats Engine</h3>
+          <p>One signature stat per qualified nation. 48 teams, 48 stories. No filler.</p>
+          <div class="map-card-meta">
+            <span class="map-card-tag">Social</span>
+          </div>
+        </div>
+      </div>
+      <div class="map-card">
+        <div class="map-card-icon">&#9673;</div>
+        <div class="map-card-content">
+          <h3>PL x WC2026 Matrix</h3>
+          <p>Nationality breakdown across 20 Premier League clubs. All-time player origins mapped to World Cup squads.</p>
+          <div class="map-card-meta">
+            <span class="map-card-tag">Data</span>
+          </div>
+        </div>
+      </div>
+      <div class="map-card">
+        <div class="map-card-icon">&#9673;</div>
+        <div class="map-card-content">
+          <h3>Goals-per-Game Era Map</h3>
+          <p>Goal density across 90 years of World Cup football. From Hungary 1954 to the defensive shifts of the 1990s.</p>
+          <div class="map-card-meta">
+            <span class="map-card-tag">Visualisation</span>
+          </div>
+        </div>
+      </div>
+      <div class="map-card">
+        <div class="map-card-icon">&#9673;</div>
+        <div class="map-card-content">
+          <h3>Host Advantage Score</h3>
+          <p>Host nation performance versus pre-tournament ranking. 22 tournaments of home-ground effect data.</p>
+          <div class="map-card-meta">
+            <span class="map-card-tag">Analysis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Agents -->
+  <section class="agents" id="agents">
+    <div class="agents-header">
+      <h2 class="section-title">
+        <span class="section-title-num">02</span>
+        The unit
+      </h2>
+      <p class="agents-desc">Six functions. One output.</p>
+    </div>
+    <div class="agents-grid">
+      <article class="agent-card" style="--agent-color: #a78bfa">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F4BB;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">The Developer</h3>
+          <p class="agent-card-role">Engineering lead</p>
+          <p class="agent-card-desc">Architecture, implementation, production systems. Ships what the designer specs, at speed.</p>
+        </div>
+      </article>
+      <article class="agent-card" style="--agent-color: #f59e0b">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F3A8;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">The Designer</h3>
+          <p class="agent-card-role">Visual lead</p>
+          <p class="agent-card-desc">Layout, typography, motion. Every pixel has intent. Every interaction has purpose.</p>
+        </div>
+      </article>
+      <article class="agent-card" style="--agent-color: #f59e0b">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F4CA;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">Stat Man</h3>
+          <p class="agent-card-role">Data researcher</p>
+          <p class="agent-card-desc">Raw data, careful analysis, structured findings. Every claim has a source. Every number has context.</p>
+        </div>
+      </article>
+      <article class="agent-card" style="--agent-color: #ef4444">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F4E2;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">Hype Man</h3>
+          <p class="agent-card-role">Distribution</p>
+          <p class="agent-card-desc">Research becomes content. Content reaches audience. No marketing copy. No fluff. Just signal.</p>
+        </div>
+      </article>
+      <article class="agent-card" style="--agent-color: #3b82f6">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F454;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">Product</h3>
+          <p class="agent-card-role">Strategy</p>
+          <p class="agent-card-desc">Direction, priorities, market fit. Defines what gets built and why. Holds the line on scope.</p>
+        </div>
+      </article>
+      <article class="agent-card" style="--agent-color: #22c55e">
+        <div class="agent-card-visual">
+          <div class="agent-card-emoji">&#x1F385;</div>
+        </div>
+        <div class="agent-card-body">
+          <h3 class="agent-card-name">Santa1</h3>
+          <p class="agent-card-role">Orchestrator</p>
+          <p class="agent-card-desc">Connects the unit. Makes the call on trade-offs. Takes work live. Keeps everyone aimed at the same target.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Pipeline -->
+  <section class="pipeline">
+    <div class="pipeline-header">
+      <h2 class="section-title">
+        <span class="section-title-num">03</span>
+        Pipeline
+      </h2>
+      <p class="pipeline-desc">Raw research to published output. No bloat.</p>
+    </div>
+    <div class="pipeline-steps">
+      <div class="pipeline-step" style="--step-index: 0">
+        <div class="pipeline-step-visual">
+          <span class="pipeline-step-num">S1</span>
+        </div>
+        <div class="pipeline-step-content">
+          <h3>Raw query</h3>
+          <p>A question, a dataset, a hunch. Comes from anywhere.</p>
+        </div>
+      </div>
+      <div class="pipeline-step" style="--step-index: 1">
+        <div class="pipeline-step-visual">
+          <span class="pipeline-step-num">S2</span>
+        </div>
+        <div class="pipeline-step-content">
+          <h3>Research & verify</h3>
+          <p>Stat Man digs. Sources cross-checked. Numbers validated.</p>
+        </div>
+      </div>
+      <div class="pipeline-step" style="--step-index: 2">
+        <div class="pipeline-step-visual">
+          <span class="pipeline-step-num">S3</span>
+        </div>
+        <div class="pipeline-step-content">
+          <h3>Design & build</h3>
+          <p>Designer specs. Developer builds. Review gates every state.</p>
+        </div>
+      </div>
+      <div class="pipeline-step" style="--step-index: 3">
+        <div class="pipeline-step-visual">
+          <span class="pipeline-step-num">S4</span>
+        </div>
+        <div class="pipeline-step-content">
+          <h3 ship>Ship</h3>
+          <p>Hype Man distributes. Santa1 deploys. Work reaches audience.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <h2 class="section-title">
+        <span class="section-title-num">04</span>
+        Contact
+      </h2>
+      <div class="contact-block">
+        <div class="contact-line">
+          <span class="contact-label">Email</span>
+          <a href="mailto:studio@empire.work" class="contact-value">studio@empire.work</a>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Hub</span>
+          <span class="contact-value">127.0.0.1:5050</span>
+        </div>
+        <div class="contact-line">
+          <span class="contact-label">Status</span>
+          <span class="contact-value contact-status">
+            <span class="contact-status-dot"></span>
+            Live
+          </span>
+        </div>
+      </div>
+      <div class="contact-counter">
+        <span class="contact-counter-num" id="counter">000</span>
+        <span class="contact-counter-label">Projects shipped this session</span>
+      </div>
+    </div>
+    <footer class="footer">
+      <span>Empire | Dublin</span>
+      <span class="footer-sep">|</span>
+      <span>Est. 2026</span>
+    </footer>
+  </section>
+
+  <script src="main.js"></script>
+</body>
+</html>
