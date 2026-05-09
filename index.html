@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,61 @@
   <meta name="description" content="Data studio. Research, build, ship.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Crimson+Text:ital@0;1&family=Space+Grotesk:wght@400;700&family=Space+Mono:regular&family=Fraunces:opsz,wght@9..144,400..900&family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="theme-minimalist">
+
+  <!-- Theme selector -->
+  <div class="switcher" role="toolbar" aria-label="Theme selector">
+    <div class="switcher-track" role="tablist">
+      <button class="switcher-btn" data-theme="minimalist" role="tab" aria-selected="true">
+        <span class="switcher-swatch" style="--sw: #a78bfa"></span>
+        <span class="switcher-label">Minimal</span>
+      </button>
+      <button class="switcher-btn" data-theme="brutalist" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #e8bf00; --sw-bg: #2a2a1a"></span>
+        <span class="switcher-label">Brutal</span>
+      </button>
+      <button class="switcher-btn" data-theme="glass" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #ffffff; --sw-bg: rgba(255,255,255,0.1)"></span>
+        <span class="switcher-label">Glass</span>
+      </button>
+      <button class="switcher-btn" data-theme="terminal" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #00FF41; --sw-bg: #0a0a0a"></span>
+        <span class="switcher-label">Terminal</span>
+      </button>
+      <button class="switcher-btn" data-theme="swiss" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #FF0000; --sw-bg: #ffffff"></span>
+        <span class="switcher-label">Swiss</span>
+      </button>
+      <button class="switcher-btn" data-theme="cyberpunk" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #00FFFF; --sw-bg: #0a0a2a"></span>
+        <span class="switcher-label">Cyber</span>
+      </button>
+      <button class="switcher-btn" data-theme="editorial" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #C0392B; --sw-bg: #F5F0E8"></span>
+        <span class="switcher-label">Editorial</span>
+      </button>
+      <button class="switcher-btn" data-theme="mono" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #000000; --sw-bg: #f5f5f5"></span>
+        <span class="switcher-label">Mono</span>
+      </button>
+      <button class="switcher-btn" data-theme="nature" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #7EC850; --sw-bg: #0D1F12"></span>
+        <span class="switcher-label">Nature</span>
+      </button>
+      <button class="switcher-btn" data-theme="bauhaus" role="tab" aria-selected="false">
+        <span class="switcher-swatch" style="--sw: #E53935; --sw-bg: #FAFAFA"></span>
+        <span class="switcher-label">Bauhaus</span>
+      </button>
+    </div>
+    <div class="switcher-arrows">
+      <button class="switcher-arrow switcher-arrow--prev" aria-label="Previous theme">&#8592;</button>
+      <span class="switcher-name">Minimal</span>
+      <button class="switcher-arrow switcher-arrow--next" aria-label="Next theme">&#8594;</button>
+    </div>
+  </div>
 
   <!-- Cursor follower -->
   <div class="cursor" aria-hidden="true"></div>
@@ -127,7 +178,7 @@
       <p class="agents-desc">Six functions. One output.</p>
     </div>
     <div class="agents-grid">
-      <article class="agent-card" style="--agent-color: #a78bfa">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F4BB;</div>
         </div>
@@ -137,7 +188,7 @@
           <p class="agent-card-desc">Architecture, implementation, production systems. Ships what the designer specs, at speed.</p>
         </div>
       </article>
-      <article class="agent-card" style="--agent-color: #f59e0b">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F3A8;</div>
         </div>
@@ -147,7 +198,7 @@
           <p class="agent-card-desc">Layout, typography, motion. Every pixel has intent. Every interaction has purpose.</p>
         </div>
       </article>
-      <article class="agent-card" style="--agent-color: #f59e0b">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F4CA;</div>
         </div>
@@ -157,7 +208,7 @@
           <p class="agent-card-desc">Raw data, careful analysis, structured findings. Every claim has a source. Every number has context.</p>
         </div>
       </article>
-      <article class="agent-card" style="--agent-color: #ef4444">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F4E2;</div>
         </div>
@@ -167,7 +218,7 @@
           <p class="agent-card-desc">Research becomes content. Content reaches audience. No marketing copy. No fluff. Just signal.</p>
         </div>
       </article>
-      <article class="agent-card" style="--agent-color: #3b82f6">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F454;</div>
         </div>
@@ -177,7 +228,7 @@
           <p class="agent-card-desc">Direction, priorities, market fit. Defines what gets built and why. Holds the line on scope.</p>
         </div>
       </article>
-      <article class="agent-card" style="--agent-color: #22c55e">
+      <article class="agent-card">
         <div class="agent-card-visual">
           <div class="agent-card-emoji">&#x1F385;</div>
         </div>
@@ -232,7 +283,7 @@
           <span class="pipeline-step-num">S4</span>
         </div>
         <div class="pipeline-step-content">
-          <h3 ship>Ship</h3>
+          <h3>Ship</h3>
           <p>Hype Man distributes. Santa1 deploys. Work reaches audience.</p>
         </div>
       </div>

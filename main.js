@@ -1,9 +1,86 @@
 /* ========================================
-   EMPIRE SHOWCASE | scroll + interaction
+   EMPIRE SHOWCASE | theme engine + scroll
    ======================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
   'use strict';
+
+  const THEMES = ['minimalist','brutalist','glass','terminal','swiss','cyberpunk','editorial','mono','nature','bauhaus'];
+  const THEME_KEY = 'empire-theme';
+
+  // ---- THEME ENGINE ----
+  const body = document.body;
+  const switcherBtns = document.querySelectorAll('[data-theme]');
+  const switcherName = document.querySelector('.switcher-name');
+  const prevBtn = document.querySelector('.switcher-arrow--prev');
+  const nextBtn = document.querySelector('.switcher-arrow--next');
+
+  let currentTheme = localStorage.getItem(THEME_KEY) || 'minimalist';
+
+  const applyTheme = (theme, animate = true) => {
+    if (!THEMES.includes(theme)) return;
+
+    // Remove all theme classes
+    THEMES.forEach(t => body.classList.remove('theme-' + t));
+
+    if (!animate) body.classList.add('switching');
+
+    body.classList.add('theme-' + theme);
+    currentTheme = theme;
+    localStorage.setItem(THEME_KEY, theme);
+
+    // Update switcher buttons
+    switcherBtns.forEach(btn => {
+      const isActive = btn.dataset.theme === theme;
+      btn.setAttribute('aria-selected', isActive.toString());
+    });
+
+    // Update name
+    if (switcherName) {
+      const names = {
+        minimalist: 'Minimal', brutalist: 'Brutal', glass: 'Glass',
+        terminal: 'Terminal', swiss: 'Swiss', cyberpunk: 'Cyber',
+        editorial: 'Editorial', mono: 'Mono', nature: 'Nature', bauhaus: 'Bauhaus'
+      };
+      switcherName.textContent = names[theme] || theme;
+    }
+
+    // Dispatch custom event for other handlers
+    document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+
+    if (!animate) {
+      requestAnimationFrame(() => body.classList.remove('switching'));
+    }
+  };
+
+  // Button clicks
+  switcherBtns.forEach(btn => {
+    btn.addEventListener('click', () => applyTheme(btn.dataset.theme));
+  });
+
+  // Arrow navigation
+  const getAdjacent = (dir) => {
+    const idx = THEMES.indexOf(currentTheme);
+    const next = (idx + dir + THEMES.length) % THEMES.length;
+    return THEMES[next];
+  };
+
+  if (prevBtn) prevBtn.addEventListener('click', () => applyTheme(getAdjacent(-1)));
+  if (nextBtn) nextBtn.addEventListener('click', () => applyTheme(getAdjacent(1)));
+
+  // Keyboard: left/right arrows when focused on switcher
+  const switcher = document.querySelector('.switcher');
+  if (switcher) {
+    switcher.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); applyTheme(getAdjacent(-1)); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); applyTheme(getAdjacent(1)); }
+    });
+    // Make switcher focusable
+    switcher.setAttribute('tabindex', '0');
+  }
+
+  // Apply saved theme on load (no animation)
+  applyTheme(currentTheme, false);
 
   // ---- CURSOR FOLLOWER ----
   const cursor = document.querySelector('.cursor');
@@ -25,7 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
       cursor.classList.remove('visible');
     });
 
-    // Smooth follower
     const follow = () => {
       cx += (mx - cx) * 0.12;
       cy += (my - cy) * 0.12;
@@ -35,14 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     follow();
 
-    // Scale up on clickables
     document.querySelectorAll('a, button, .agent-card, .map-card, .pipeline-step').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('active'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
     });
   }
 
-  // ---- SCROLL REVEAL (IntersectionObserver) ----
+  // ---- SCROLL REVEAL ----
   const revealElements = document.querySelectorAll('.hero-title, .pipeline-step, .agent-card, .map-card');
 
   const observer = new IntersectionObserver((entries) => {
@@ -56,15 +131,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealElements.forEach(el => observer.observe(el));
 
+  // ---- HERO DOT GENERATOR ----
+  const hero = document.querySelector('.hero');
+  if (hero && !hero.querySelector('.hero-dot')) {
+    const count = 20;
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('span');
+      dot.className = 'hero-dot';
+      dot.style.cssText = `
+        top: ${Math.random() * 100}%; left: ${Math.random() * 100}%;
+        opacity: ${0.2 + Math.random() * 0.4};
+        animation-delay: ${Math.random() * 4}s;
+        animation-duration: ${6 + Math.random() * 8}s;
+      `;
+      hero.appendChild(dot);
+    }
+  }
+
   // ---- COUNTER ANIMATION ----
   const counterEl = document.getElementById('counter');
   if (counterEl) {
     const target = 2026;
-    let current = 0;
-    const step = Math.ceil(target / 60);
+    let counted = false;
     const startObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && !counted) {
+          counted = true;
+          let current = 0;
+          const step = Math.ceil(target / 60);
           const interval = setInterval(() => {
             current += step;
             if (current >= target) {
@@ -115,28 +209,8 @@ document.addEventListener('DOMContentLoaded', () => {
     statObserver.observe(stat.el);
   });
 
-  // ---- RANDOM DOT PATTERN for hero ----
-  const hero = document.querySelector('.hero');
-  if (hero) {
-    const dotCount = 20;
-    for (let i = 0; i < dotCount; i++) {
-      const dot = document.createElement('span');
-      dot.className = 'hero-dot';
-      dot.style.cssText = `
-        position: absolute; width: 2px; height: 2px; border-radius: 50%;
-        background: var(--gray-700); pointer-events: none;
-        top: ${Math.random() * 100}%; left: ${Math.random() * 100}%;
-        opacity: ${0.2 + Math.random() * 0.4};
-        animation: dot-float ${6 + Math.random() * 8}s ease-in-out infinite alternate;
-        animation-delay: ${Math.random() * 4}s;
-      `;
-      hero.appendChild(dot);
-    }
-  }
-
-  // ---- COLOR-SCHEME TOGGLE (prefers reduced motion check) ----
-  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) {
+  // ---- REDUCED MOTION ----
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     document.querySelectorAll('.hero-dot').forEach(el => el.remove());
   }
 });
