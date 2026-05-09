@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&family=Crimson+Text:ital@0;1&family=Space+Grotesk:wght@400;700&family=Fraunces:opsz,wght@9..144,400..900&family=DM+Sans:opsz@9..40&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="design-spatial theme-minimalist">
+<body class="design-glassmorphism theme-minimalist">
 
   <!-- Cursor follower -->
   <div class="cursor" aria-hidden="true"></div>
@@ -18,45 +18,37 @@
   <!-- Switcher bar (design row + theme row) -->
   <div class="switcher" role="toolbar" aria-label="Design and theme selector">
     <div class="switcher-row switcher-row--design" role="tablist" aria-label="Design layouts">
+      <button class="switcher-btn" data-type="design" data-value="glassmorphism" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="background:linear-gradient(135deg,rgba(255,255,255,.3) 40%,rgba(255,255,255,.05) 40%,rgba(255,255,255,.05) 55%,rgba(255,255,255,.1) 55%,rgba(255,255,255,.1) 70%,transparent 70%)"></span></span>
+        <span class="switcher-label">Glass 2.0</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="bento" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="border:1px solid var(--accent);border-radius:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)"></span></span>
+        <span class="switcher-label">Bento</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="kinetic" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="background:linear-gradient(135deg,var(--accent) 30%,transparent 30%,transparent 60%,var(--accent2) 60%)"></span></span>
+        <span class="switcher-label">Kinetic</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="mesh" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="border-radius:40% 60%;background:radial-gradient(circle at 30% 30%,var(--accent) 0%,transparent 50%)"></span></span>
+        <span class="switcher-label">Mesh</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="scrollytelling" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="background:repeating-linear-gradient(0deg,var(--accent) 0,var(--accent) 3px,transparent 3px,transparent 10px)"></span></span>
+        <span class="switcher-label">Scrolly</span>
+      </button>
+      <button class="switcher-btn" data-type="design" data-value="neobrutal" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="border:2px solid var(--accent);box-shadow:2px 2px 0 var(--accent)"></span></span>
+        <span class="switcher-label">Neo-Brutal</span>
+      </button>
       <button class="switcher-btn" data-type="design" data-value="spatial" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--spatial"></span></span>
+        <span class="switcher-preview"><span class="sw-preview" style="background:linear-gradient(135deg,var(--accent) 25%,var(--border) 25%,var(--border) 50%,var(--accent2) 50%,var(--accent2) 75%,transparent 75%)"></span></span>
         <span class="switcher-label">Spatial</span>
       </button>
-      <button class="switcher-btn" data-type="design" data-value="type" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--type"></span></span>
-        <span class="switcher-label">Type</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="slides" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--slides"></span></span>
-        <span class="switcher-label">Slides</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="terminal" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--terminal"></span></span>
-        <span class="switcher-label">Terminal</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="zine" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--zine"></span></span>
-        <span class="switcher-label">Zine</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="zen" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--zen"></span></span>
-        <span class="switcher-label">Zen</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="split" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--split"></span></span>
-        <span class="switcher-label">Split</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="os" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--os"></span></span>
-        <span class="switcher-label">OS</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="deutsche" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--deutsche"></span></span>
-        <span class="switcher-label">Deutsche</span>
-      </button>
-      <button class="switcher-btn" data-type="design" data-value="organic" role="tab" aria-selected="false">
-        <span class="switcher-preview"><span class="sw-preview sw-preview--organic"></span></span>
-        <span class="switcher-label">Organic</span>
+      <button class="switcher-btn" data-type="design" data-value="skeletal" role="tab" aria-selected="false">
+        <span class="switcher-preview"><span class="sw-preview" style="border:1px dashed var(--accent)"></span></span>
+        <span class="switcher-label">Skeletal</span>
       </button>
     </div>
     <div class="switcher-row switcher-row--theme" role="tablist" aria-label="Color themes">
@@ -102,7 +94,7 @@
       </button>
     </div>
     <div class="switcher-current">
-      <span class="switcher-current-design">Asymmetric</span>
+      <span class="switcher-current-design">Glass 2.0</span>
       <span class="switcher-current-sep">/</span>
       <span class="switcher-current-theme">Minimal</span>
     </div>

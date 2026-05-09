@@ -1,187 +1,159 @@
-/* ========================================
-   EMPIRE SHOWCASE | design + theme engine
-   ======================================== */
+document.addEventListener('DOMContentLoaded',()=>{
+'use strict';
 
-document.addEventListener('DOMContentLoaded', () => {
-  'use strict';
+const DESIGNS=['glassmorphism','bento','kinetic','mesh','scrollytelling','neobrutal','spatial','skeletal'];
+const THEMES=['minimalist','brutalist','glass','terminal','swiss','cyberpunk','editorial','mono','nature','bauhaus'];
+const KEY_DESIGN='empire-design',KEY_THEME='empire-theme';
+const body=document.body;
+const designBtns=document.querySelectorAll('[data-type="design"]');
+const themeBtns=document.querySelectorAll('[data-type="theme"]');
+const currentDesignEl=document.querySelector('.switcher-current-design');
+const currentThemeEl=document.querySelector('.switcher-current-theme');
+const names={designs:{glassmorphism:'Glass 2.0',bento:'Bento',kinetic:'Kinetic',mesh:'Mesh',scrollytelling:'Scrolly',neobrutal:'Neo-Brutal',spatial:'Spatial',skeletal:'Skeletal'},themes:{minimalist:'Minimal',brutalist:'Brutal',glass:'Glass',terminal:'Terminal',swiss:'Swiss',cyberpunk:'Cyber',editorial:'Editorial',mono:'Mono',nature:'Nature',bauhaus:'Bauhaus'}};
+let currentDesign=localStorage.getItem(KEY_DESIGN)||'glassmorphism';
+let currentTheme=localStorage.getItem(KEY_THEME)||'minimalist';
 
-  const DESIGNS = ['spatial','type','slides','terminal','zine','zen','split','os','deutsche','organic'];  // 10 distinct identities
-  const THEMES = ['minimalist','brutalist','glass','terminal','swiss','cyberpunk','editorial','mono','nature','bauhaus'];
+const apply=(type,value,animate=true)=>{
+  if(!animate)body.classList.add('switching');
+  if(type==='design'){
+    DESIGNS.forEach(d=>body.classList.remove('design-'+d));
+    body.classList.add('design-'+value);currentDesign=value;
+    localStorage.setItem(KEY_DESIGN,value);
+    designBtns.forEach(b=>b.setAttribute('aria-selected',(b.dataset.value===value).toString()));
+    if(currentDesignEl)currentDesignEl.textContent=names.designs[value]||value;
+    document.dispatchEvent(new CustomEvent('designchange',{detail:{design:value}}));
+  }else if(type==='theme'){
+    THEMES.forEach(t=>body.classList.remove('theme-'+t));
+    body.classList.add('theme-'+value);currentTheme=value;
+    localStorage.setItem(KEY_THEME,value);
+    themeBtns.forEach(b=>b.setAttribute('aria-selected',(b.dataset.value===value).toString()));
+    if(currentThemeEl)currentThemeEl.textContent=names.themes[value]||value;
+  }
+  if(!animate)requestAnimationFrame(()=>body.classList.remove('switching'));
+};
 
-  const KEY_DESIGN = 'empire-design';
-  const KEY_THEME = 'empire-theme';
-  const body = document.body;
+designBtns.forEach(b=>b.addEventListener('click',()=>apply('design',b.dataset.value)));
+themeBtns.forEach(b=>b.addEventListener('click',()=>apply('theme',b.dataset.value)));
+const switcher=document.querySelector('.switcher');
+if(switcher){
+  switcher.setAttribute('tabindex','0');
+  switcher.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){e.preventDefault();const idx=THEMES.indexOf(currentTheme);apply('theme',THEMES[(idx-1+THEMES.length)%THEMES.length])}
+    if(e.key==='ArrowRight'){e.preventDefault();const idx=THEMES.indexOf(currentTheme);apply('theme',THEMES[(idx+1)%THEMES.length])}
+    if(e.key==='ArrowUp'){e.preventDefault();const idx=DESIGNS.indexOf(currentDesign);apply('design',DESIGNS[(idx-1+DESIGNS.length)%DESIGNS.length])}
+    if(e.key==='ArrowDown'){e.preventDefault();const idx=DESIGNS.indexOf(currentDesign);apply('design',DESIGNS[(idx+1)%DESIGNS.length])}
+  });
+}
+apply('design',currentDesign,false);
+apply('theme',currentTheme,false);
 
-  // ---- SWITCHER ENGINE ----
-  const designBtns = document.querySelectorAll('[data-type="design"]');
-  const themeBtns = document.querySelectorAll('[data-type="theme"]');
-  const currentDesignEl = document.querySelector('.switcher-current-design');
-  const currentThemeEl = document.querySelector('.switcher-current-theme');
+// ---- CURSOR ----
+const cursor=document.querySelector('.cursor');
+if(cursor){
+  let cx=0,cy=0,mx=0,my=0,vis=!1;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;if(!vis){vis=!0;cursor.classList.add('visible')}});
+  document.addEventListener('mouseleave',()=>{vis=!1;cursor.classList.remove('visible')});
+  (function f(){cx+=(mx-cx)*.12;cy+=(my-cy)*.12;cursor.style.left=cx+'px';cursor.style.top=cy+'px';requestAnimationFrame(f)})();
+  document.querySelectorAll('a,button,.agent-card,.map-card,.pipeline-step').forEach(el=>{
+    el.addEventListener('mouseenter',()=>cursor.classList.add('active'));
+    el.addEventListener('mouseleave',()=>cursor.classList.remove('active'));
+  });
+}
 
-  const names = {
-    designs: {
-      spatial: 'Spatial', type: 'Type', slides: 'Slides',
-      terminal: 'Terminal', zine: 'Zine', zen: 'Zen',
-      split: 'Split', os: 'OS', deutsche: 'Deutsche', organic: 'Organic'
-    },
-    themes: {
-      minimalist: 'Minimal', brutalist: 'Brutal', glass: 'Glass',
-      terminal: 'Terminal', swiss: 'Swiss', cyberpunk: 'Cyber',
-      editorial: 'Editorial', mono: 'Mono', nature: 'Nature', bauhaus: 'Bauhaus'
-    }
-  };
+// ---- SCROLL REVEAL ----
+const ro=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){e.target.classList.add('reveal','revealed');ro.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.hero-title,.pipeline-step,.agent-card,.map-card').forEach(e=>ro.observe(e));
 
-  let currentDesign = localStorage.getItem(KEY_DESIGN) || 'spatial';
-  let currentTheme = localStorage.getItem(KEY_THEME) || 'minimalist';  // keep default theme same
+// ---- COUNTER ----
+const ce=document.getElementById('counter');
+if(ce){let c=!1;new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting&&!c){c=!0;let cur=0,st=Math.ceil(2026/60),i=setInterval(()=>{cur+=st;if(cur>=2026){cur=2026;clearInterval(i)}ce.textContent=String(cur).padStart(4,'0')},24)}})}).observe(ce)}
 
-  const apply = (type, value, animate = true) => {
-    if (!animate) body.classList.add('switching');
+// ---- STATS ----
+const stats=[{el:document.getElementById('stat-origins'),target:12},{el:document.getElementById('stat-roasts'),target:47},{el:document.getElementById('stat-countries'),target:3}].filter(s=>s.el);
+const so=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting){const s=stats[parseInt(e.target.dataset.idx)];let cur=0,st=Math.max(1,Math.ceil(s.target/40)),i=setInterval(()=>{cur+=st;if(cur>=s.target){cur=s.target;clearInterval(i)}s.el.textContent=cur},20);so.unobserve(e.target)}})},{threshold:.5});
+stats.forEach((s,i)=>{s.el.dataset.idx=i;so.observe(s.el)});
 
-    if (type === 'design') {
-      DESIGNS.forEach(d => body.classList.remove('design-' + d));
-      body.classList.add('design-' + value);
-      currentDesign = value;
-      localStorage.setItem(KEY_DESIGN, value);
-      designBtns.forEach(btn => {
-        btn.setAttribute('aria-selected', (btn.dataset.value === value).toString());
-      });
-      if (currentDesignEl) currentDesignEl.textContent = names.designs[value] || value;
-    } else if (type === 'theme') {
-      THEMES.forEach(t => body.classList.remove('theme-' + t));
-      body.classList.add('theme-' + value);
-      currentTheme = value;
-      localStorage.setItem(KEY_THEME, value);
-      themeBtns.forEach(btn => {
-        btn.setAttribute('aria-selected', (btn.dataset.value === value).toString());
-      });
-      if (currentThemeEl) currentThemeEl.textContent = names.themes[value] || value;
-    }
+// ---- GYROSCOPE TILT (Glassmorphism) ----
+if(window.DeviceOrientationEvent){
+  window.addEventListener('deviceorientation',e=>{
+    if(!body.classList.contains('design-glassmorphism'))return;
+    const beta=e.beta||0,gamma=e.gamma||0;
+    const cards=document.querySelectorAll('.map-card,.agent-card,.pipeline-step');
+    cards.forEach((c,i)=>{
+      const x=gamma*.02*(i%5+1),y=beta*.015*(i%3+1);
+      c.style.transform=`perspective(800px) rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+  },{passive:true});
+}
 
-    document.dispatchEvent(new CustomEvent('empire-switch', { detail: { design: currentDesign, theme: currentTheme } }));
+// ---- SPRING PHYSICS (Glassmorphism card entry) ----
+const springObserver=new IntersectionObserver(e=>{e.forEach(e=>{
+  if(e.isIntersecting&&body.classList.contains('design-glassmorphism')){
+    e.target.style.transition='transform .6s cubic-bezier(.34,1.56,.64,1),opacity .5s';
+    e.target.style.transform='translateY(0)';
+    e.target.style.opacity='1';
+    springObserver.unobserve(e.target);
+  }
+})},{threshold:.05});
+document.querySelectorAll('.design-glassmorphism .map-card,.design-glassmorphism .agent-card').forEach(c=>{
+  c.style.transform='translateY(40px)';c.style.opacity='0';
+  springObserver.observe(c);
+});
 
-    if (!animate) requestAnimationFrame(() => body.classList.remove('switching'));
-  };
+// ---- KINETIC SCROLL-TIMELINE (text weight+rotation) ----
+let lastScrollY=0,scrollVelocity=0;
+window.addEventListener('scroll',()=>{
+  if(!body.classList.contains('design-kinetic'))return;
+  const now=window.scrollY;
+  scrollVelocity=Math.abs(now-lastScrollY);
+  lastScrollY=now;
+  const rot=Math.min(now*.02,12);
+  const weight=500+Math.min(scrollVelocity*2,400);
+  document.querySelectorAll('.hero-title,.section-title').forEach(el=>{
+    el.style.transform=`rotate(${rot}deg)`;
+    el.style.fontVariationSettings=`'wght' ${weight}`;
+  });
+  document.querySelectorAll('.map-card-content h3').forEach(el=>{
+    el.style.fontVariationSettings=`'wght' ${Math.min(400+scrollVelocity*3,800)}`;
+  });
+},{passive:true});
 
-  // Button clicks
-  designBtns.forEach(btn => btn.addEventListener('click', () => apply('design', btn.dataset.value)));
-  themeBtns.forEach(btn => btn.addEventListener('click', () => apply('theme', btn.dataset.value)));
-
-  // Keyboard navigation
-  const switcher = document.querySelector('.switcher');
-  if (switcher) {
-    switcher.setAttribute('tabindex', '0');
-    switcher.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        const idx = DESIGNS.indexOf(currentDesign);
-        apply('design', DESIGNS[(idx - 1 + DESIGNS.length) % DESIGNS.length]);
-      }
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        const idx = THEMES.indexOf(currentTheme);
-        apply('theme', THEMES[(idx + 1) % THEMES.length]);
-      }
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const idx = THEMES.indexOf(currentTheme);
-        apply('theme', THEMES[(idx - 1 + THEMES.length) % THEMES.length]);
-      }
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const idx = DESIGNS.indexOf(currentDesign);
-        apply('design', DESIGNS[(idx + 1) % DESIGNS.length]);
-      }
+// ---- SCROLLYTELLING STAGES ----
+document.addEventListener('designchange',()=>{
+  if(body.classList.contains('design-scrollytelling')){
+    const sections=[...document.querySelectorAll('.hero,.map,.agents,.pipeline,.contact')];
+    const total=sections.length;
+    sections.forEach((s,i)=>{
+      const top=(i/total)*100;
+      const bottom=((i+1)/total)*100;
+      s.style.setProperty('--stage-top',top+'%');
+      s.style.setProperty('--stage-bottom',bottom+'%');
     });
   }
+});
 
-  // Apply saved state
-  apply('design', currentDesign, false);
-  apply('theme', currentTheme, false);
-
-  // ---- CURSOR ----
-  const cursor = document.querySelector('.cursor');
-  if (cursor) {
-    let cx = 0, cy = 0, mx = 0, my = 0, visible = false;
-    document.addEventListener('mousemove', (e) => {
-      mx = e.clientX; my = e.clientY;
-      if (!visible) { visible = true; cursor.classList.add('visible'); }
-    });
-    document.addEventListener('mouseleave', () => { visible = false; cursor.classList.remove('visible'); });
-    (function follow() {
-      cx += (mx - cx) * .12; cy += (my - cy) * .12;
-      cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
-      requestAnimationFrame(follow);
-    })();
-    document.querySelectorAll('a, button, .agent-card, .map-card, .pipeline-step').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
-    });
+// ---- NEO-BRUTAL HARD SHADOW ON CLICK ----
+document.addEventListener('mousedown',e=>{
+  const card=e.target.closest('.map-card,.agent-card,.pipeline-step');
+  if(card&&body.classList.contains('design-neobrutal')){
+    card.style.transition='box-shadow .05s step-end,transform .05s step-end';
+    card.style.boxShadow='3px 3px 0 0 var(--accent)';
+    card.style.transform='translate(3px,3px)';
+    const up=()=>{
+      card.style.boxShadow='8px 8px 0 0 var(--accent)';
+      card.style.transform='translate(0,0)';
+      document.removeEventListener('mouseup',up);
+    };
+    document.addEventListener('mouseup',up);
   }
+});
 
-  // ---- SCROLL REVEALS ----
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('reveal', 'revealed');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: .15, rootMargin: '0px 0px -50px 0px' });
+// ---- HERO DOTS ----
+if(!document.querySelector('.hero-dot')){
+  const h=document.querySelector('.hero');
+  if(h)for(let i=0;i<20;i++){const d=document.createElement('span');d.className='hero-dot';d.style.cssText=`top:${Math.random()*100}%;left:${Math.random()*100}%;opacity:${.2+Math.random()*.4};animation-delay:${Math.random()*4}s;animation-duration:${6+Math.random()*8}s;`;h.appendChild(d)}
+}
 
-  document.querySelectorAll('.hero-title, .pipeline-step, .agent-card, .map-card').forEach(el => revealObserver.observe(el));
-
-  // ---- HERO DOTS ----
-  const hero = document.querySelector('.hero');
-  if (hero && !hero.querySelector('.hero-dot')) {
-    for (let i = 0; i < 20; i++) {
-      const dot = document.createElement('span');
-      dot.className = 'hero-dot';
-      dot.style.cssText = `top: ${Math.random()*100}%; left: ${Math.random()*100}%; opacity: ${.2+Math.random()*.4}; animation-delay: ${Math.random()*4}s; animation-duration: ${6+Math.random()*8}s;`;
-      hero.appendChild(dot);
-    }
-  }
-
-  // ---- COUNTER ----
-  const counterEl = document.getElementById('counter');
-  if (counterEl) {
-    let counted = false;
-    new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !counted) {
-          counted = true;
-          let cur = 0; const step = Math.ceil(2026 / 60);
-          const interval = setInterval(() => {
-            cur += step;
-            if (cur >= 2026) { cur = 2026; clearInterval(interval); }
-            counterEl.textContent = String(cur).padStart(4, '0');
-          }, 24);
-        }
-      });
-    }, { threshold: .5 }).observe(counterEl);
-  }
-
-  // ---- STAT COUNTERS ----
-  const stats = [
-    { el: document.getElementById('stat-origins'), target: 12 },
-    { el: document.getElementById('stat-roasts'), target: 47 },
-    { el: document.getElementById('stat-countries'), target: 3 },
-  ].filter(s => s.el);
-
-  const statObs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const s = stats[parseInt(entry.target.dataset.idx)];
-        let cur = 0; const step = Math.max(1, Math.ceil(s.target / 40));
-        const interval = setInterval(() => { cur += step; if (cur >= s.target) { cur = s.target; clearInterval(interval); } s.el.textContent = cur; }, 20);
-        statObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: .5 });
-
-  stats.forEach((s, i) => { s.el.dataset.idx = i; statObs.observe(s.el); });
-
-  // ---- REDUCED MOTION ----
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll('.hero-dot').forEach(el => el.remove());
-  }
+// ---- REDUCED MOTION ----
+if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)document.querySelectorAll('.hero-dot').forEach(e=>e.remove());
 });
